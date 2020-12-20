@@ -5,7 +5,7 @@ It allows to easily perform tensor clustering trought decomposition or tensor le
 TensorClus allows easy interaction with other python packages such as NumPy, TensorFlow or TensorD, and run methods at scale on CPU or GPU.
 It supports of major operating systems namely Microsoft Windows, macOS, and Ubuntu.
 
-[![N|Solid](https://github.com/boutalbi/TensorClus/blob/main/BinaryTensorData.PNG?raw=true)](https://link.springer.com/article/10.1007/s41060-020-00205-5)
+[![N|Solid](https://github.com/boutalbi/TensorClus/blob/master/BinaryTensorData.PNG?raw=true)](https://link.springer.com/article/10.1007/s41060-020-00205-5)
 
 - Source-code: https://github.com/boutalbi/TensorClus
 - Jupyter Notebooks: https://github.com/boutalbi/TensorClus/blob/main/demo_tensorClus.ipynb
