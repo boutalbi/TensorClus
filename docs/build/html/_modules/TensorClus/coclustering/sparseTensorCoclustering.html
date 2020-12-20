@@ -1,0 +1,822 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorClus.coclustering.sparseTensorCoclustering &mdash; TensorClus 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> TensorClus
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">TensorClus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>TensorClus.coclustering.sparseTensorCoclustering</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for TensorClus.coclustering.sparseTensorCoclustering</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">The :mod:`TensorClus.coclustering.sparseTensorCoclustering` module provides an implementation</span>
+<span class="sd">of a Sparse tensor co-clustering algorithm.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Author: Rafika Boutalbi &lt;rafika.boutalbi@gmail.com&gt;</span>
+<span class="c1">#         Mohamed Nadif &lt;mohamed.nadif@u-paris.fr&gt;</span>
+<span class="c1">#         Lazhar Labiod &lt;lazhar.labiod@u-paris.fr&gt;</span>
+
+<span class="c1"># License: BSD 3 clause</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">special</span>
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">inv</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">check_random_state</span><span class="p">,</span> <span class="n">check_array</span>
+
+<span class="kn">from</span> <span class="nn">..initialization</span> <span class="kn">import</span> <span class="n">random_init</span>
+<span class="kn">from</span> <span class="nn">.baseDiagonalCoclustering</span> <span class="kn">import</span> <span class="n">BaseDiagonalCoclust</span>
+<span class="kn">from</span> <span class="nn">TensorClus.tests.input_checking</span> <span class="kn">import</span> <span class="n">check_tensor</span><span class="p">,</span> <span class="n">check_numbers_clusters</span>
+<span class="c1"># Test GPU availability</span>
+
+<span class="n">GPU_exist</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">try</span> <span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">cp</span>
+    <span class="n">GPU_exist</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="p">:</span>
+    <span class="n">GPU_exist</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No GPU available&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GPU_exist&quot;</span><span class="p">,</span> <span class="n">GPU_exist</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SparseTensorCoclusteringPoisson"><a class="viewcode-back" href="../../../index.html#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson">[docs]</a><span class="k">class</span> <span class="nc">SparseTensorCoclusteringPoisson</span><span class="p">(</span><span class="n">BaseDiagonalCoclust</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tensor Latent Block Model for Poisson distribution.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_row_clusters : int, optional, default: 2</span>
+<span class="sd">        Number of row clusters to form</span>
+<span class="sd">    n_col_clusters : int, optional, default: 2</span>
+<span class="sd">        Number of column clusters to form</span>
+<span class="sd">    fuzzy : boolean, optional, default: True</span>
+<span class="sd">        Provide fuzzy clustering, If fuzzy is False</span>
+<span class="sd">        a hard clustering is performed</span>
+<span class="sd">    init_row : numpy array or scipy sparse matrix, \</span>
+<span class="sd">        shape (n_rows, K), optional, default: None</span>
+<span class="sd">        Initial row labels</span>
+<span class="sd">    init_col : numpy array or scipy sparse matrix, \</span>
+<span class="sd">        shape (n_cols, L), optional, default: None</span>
+<span class="sd">        Initial column labels</span>
+<span class="sd">    max_iter : int, optional, default: 20</span>
+<span class="sd">        Maximum number of iterations</span>
+<span class="sd">    n_init : int, optional, default: 1</span>
+<span class="sd">        Number of time the algorithm will be run with different</span>
+<span class="sd">        initializations. The final results will be the best output of `n_init`</span>
+<span class="sd">        consecutive runs.</span>
+<span class="sd">    random_state : integer or numpy.RandomState, optional</span>
+<span class="sd">        The generator used to initialize the centers. If an integer is</span>
+<span class="sd">        given, it fixes the seed. Defaults to the global numpy random</span>
+<span class="sd">        number generator.</span>
+<span class="sd">    tol : float, default: 1e-9</span>
+<span class="sd">        Relative tolerance with regards to criterion to declare convergence</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    row_labels_ : array-like, shape (n_rows,)</span>
+<span class="sd">        Bicluster label of each row</span>
+<span class="sd">    column_labels_ : array-like, shape (n_cols,)</span>
+<span class="sd">        Bicluster label of each column</span>
+<span class="sd">    gamma_kl : array-like, shape (k,l,v)</span>
+<span class="sd">        Value :math:`\\frac{p_{kl}}{p_{k.} \\times p_{.l}}` for each row</span>
+<span class="sd">        cluster k and column cluster l</span>
+<span class="sd">    gamma_kl_evolution : array-like, shape(k,l,max_iter)</span>
+<span class="sd">        Value of gamma_kl of each bicluster according to iterations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>  <span class="n">fuzzy</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">init_row</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">init_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gpu</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_row</span> <span class="o">=</span> <span class="n">init_row</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_col</span> <span class="o">=</span> <span class="n">init_col</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_init</span> <span class="o">=</span> <span class="n">n_init</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fuzzy</span> <span class="o">=</span> <span class="n">fuzzy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_labels_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_labels_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl_evolution</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gpu</span> <span class="o">=</span> <span class="n">gpu</span>
+
+
+
+<div class="viewcode-block" id="SparseTensorCoclusteringPoisson.fit"><a class="viewcode-back" href="../../../index.html#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform Tensor co-clustering.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</span>
+<span class="sd">            Tensor to be analyzed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">GPU_exist</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gpu</span> <span class="o">=</span> <span class="n">GPU_exist</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">GPU_exist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gpu</span>
+
+        <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+
+        <span class="c1"># check_array(X, accept_sparse=True, dtype=&quot;numeric&quot;, order=None,</span>
+        <span class="c1">#             copy=False, force_all_finite=True, ensure_2d=False,</span>
+        <span class="c1">#             allow_nd=False, ensure_min_samples=self.n_row_clusters,</span>
+        <span class="c1">#             ensure_min_features=self.n_col_clusters,</span>
+        <span class="c1">#             warn_on_dtype=False, estimator=None)</span>
+
+
+        <span class="n">check_tensor</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">check_numbers_clusters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="n">criterion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span>
+        <span class="n">criterions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterions</span>
+        <span class="n">row_labels_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels_</span>
+        <span class="n">column_labels_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels_</span>
+        <span class="n">gamma_kl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl</span>
+        <span class="n">gamma_kl_evolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl_evolution</span>
+        <span class="n">seeds</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_init</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="n">seeds</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit_single</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;matrix may contain negative or &quot;</span>
+                                 <span class="s2">&quot;unexpected NaN values&quot;</span><span class="p">)</span>
+            <span class="c1"># remember attributes corresponding to the best criterion</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">&gt;</span> <span class="n">criterion</span><span class="p">):</span>
+                <span class="n">criterion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span>
+                <span class="n">criterions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterions</span>
+                <span class="n">row_labels_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_labels_</span>
+                <span class="n">column_labels_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_labels_</span>
+                <span class="n">gamma_kl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl</span>
+                <span class="n">gamma_kl_evolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl_evolution</span>
+        <span class="c1"># update attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">criterion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterions</span> <span class="o">=</span> <span class="n">criterions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_labels_</span> <span class="o">=</span> <span class="n">row_labels_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_labels_</span> <span class="o">=</span> <span class="n">column_labels_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl</span> <span class="o">=</span> <span class="n">gamma_kl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl_evolution</span> <span class="o">=</span> <span class="n">gamma_kl_evolution</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="SparseTensorCoclusteringPoisson.gammakl"><a class="viewcode-back" href="../../../index.html#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.gammakl">[docs]</a>    <span class="k">def</span> <span class="nf">gammakl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform Tensor co-clustering.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</span>
+<span class="sd">            Tensor to be analyzed</span>
+<span class="sd">        z : row partition</span>
+<span class="sd">        w : column partition</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        gamma_kl_mat</span>
+<span class="sd">            three-way numpy array, shape=(K,L, v_features)</span>
+<span class="sd">            Computed parameters per block</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span> <span class="p">:</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_gpu</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="n">x_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">const</span><span class="p">)</span>
+            <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+        <span class="n">sum_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">sum_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+        <span class="n">nbr_element_class</span> <span class="o">=</span> <span class="n">sum_z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sum_w</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span> <span class="p">:</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">x_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">x_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">xj</span><span class="p">)</span>
+            <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+        <span class="n">gamma_kl_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+        <span class="n">zxw_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+        <span class="n">xkxl_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="n">z_k</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">z_k_t</span> <span class="o">=</span> <span class="n">z_k</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">z_k_t_xi</span> <span class="o">=</span> <span class="n">z_k_t</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+            <span class="c1"># print(&#39;z_k_t_xi&#39;, z_k_t_xi.shape)</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="n">l</span><span class="p">:</span>
+                    <span class="n">w_l</span> <span class="o">=</span> <span class="n">w</span><span class="p">[:,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+                    <span class="n">w_l_xj</span> <span class="o">=</span> <span class="n">w_l</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xj</span><span class="p">)</span>
+
+                    <span class="n">xkxl</span> <span class="o">=</span> <span class="n">z_k_t_xi</span> <span class="o">*</span> <span class="n">w_l_xj</span>
+                    <span class="n">xkxl_mat</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">xkxl</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                    <span class="c1"># print(&#39;xkxl.shape&#39;, xkxl.shape)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span><span class="p">:</span>
+                        <span class="n">zx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ijk,il&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z_k</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">zx</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ijk,il&#39;</span><span class="p">,</span> <span class="n">x_gpu</span><span class="p">,</span> <span class="n">z_k</span><span class="p">)</span>
+                        <span class="n">zx</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">zx</span><span class="p">)</span>
+                        <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+                    <span class="n">zx</span> <span class="o">=</span> <span class="n">zx</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                    <span class="c1"># print(zx.shape)</span>
+                    <span class="n">zxw</span> <span class="o">=</span> <span class="n">w_l</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">zx</span><span class="p">)</span>
+                    <span class="n">zxw_mat</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">zxw</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                    <span class="c1"># print(&#39;zxw&#39;, zxw.shape)</span>
+
+                    <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">zxw</span> <span class="o">/</span> <span class="n">xkxl</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+                    <span class="c1"># print(&#39;value.shape&#39;, value.shape)</span>
+                    <span class="n">gamma_kl_mat</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="c1">####################################################################</span>
+        <span class="n">diag_zxw_mat</span> <span class="o">=</span> <span class="n">zxw_mat</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># the &quot;middle&quot; (row) axis first.</span>
+        <span class="c1"># print(diag_zxw_mat.shape)</span>
+        <span class="n">sum_zxw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diag_zxw_mat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">diag_xkxl_mat</span> <span class="o">=</span> <span class="n">xkxl_mat</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">sum_xkxl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diag_xkxl_mat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">part1</span> <span class="o">=</span> <span class="n">const</span> <span class="o">-</span> <span class="n">sum_zxw</span> <span class="o">+</span> <span class="mf">1.e-9</span>
+        <span class="n">part2</span> <span class="o">=</span> <span class="p">(</span><span class="n">const</span> <span class="o">*</span> <span class="n">const</span><span class="p">)</span> <span class="o">-</span> <span class="n">sum_xkxl</span> <span class="o">+</span> <span class="mf">1.e-9</span>
+        <span class="n">vect_gamma</span> <span class="o">=</span> <span class="p">(</span><span class="n">part1</span> <span class="o">/</span> <span class="n">part2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">l</span><span class="p">:</span>
+                    <span class="n">gamma_kl_mat</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">vect_gamma</span>
+
+
+        <span class="k">return</span> <span class="n">gamma_kl_mat</span>  <span class="c1"># + 1.e-9</span></div>
+
+
+<div class="viewcode-block" id="SparseTensorCoclusteringPoisson.pi_k"><a class="viewcode-back" href="../../../index.html#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.pi_k">[docs]</a>    <span class="k">def</span> <span class="nf">pi_k</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">z</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute row proportion.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        z : numpy array, shape= (n_row_objects, K)</span>
+<span class="sd">            matrix of row partition</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pi_k_vect</span>
+<span class="sd">            numpy array, shape=(K)</span>
+<span class="sd">            proportion of row clusters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">pi_k_vect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">+</span> <span class="mf">1.e-9</span>
+        <span class="k">return</span> <span class="n">pi_k_vect</span></div>
+
+<div class="viewcode-block" id="SparseTensorCoclusteringPoisson.rho_l"><a class="viewcode-back" href="../../../index.html#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.rho_l">[docs]</a>    <span class="k">def</span> <span class="nf">rho_l</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">w</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute column proportion.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        w : numpy array, shape(d_col_objects, L)</span>
+<span class="sd">            matrix of column partition</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        rho_l_vect</span>
+<span class="sd">            numpy array, shape=(L)</span>
+<span class="sd">            proportion of column clusters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">rho_l_vect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">d</span> <span class="o">+</span> <span class="mf">1.e-9</span>
+        <span class="k">return</span> <span class="n">rho_l_vect</span></div>
+
+<div class="viewcode-block" id="SparseTensorCoclusteringPoisson.F_c"><a class="viewcode-back" href="../../../index.html#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.F_c">[docs]</a>    <span class="k">def</span> <span class="nf">F_c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">gammakl</span><span class="p">,</span> <span class="n">pi_k</span><span class="p">,</span> <span class="n">rho_l</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s1">&#39;ZW&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute fuzzy log-likelihood (LL) criterion.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</span>
+<span class="sd">            Tensor to be analyzed</span>
+<span class="sd">        z : numpy array, shape= (n_row_objects, K)</span>
+<span class="sd">            matrix of row partition</span>
+<span class="sd">        w : numpy array, shape(d_col_objects, L)</span>
+<span class="sd">            matrix of column partition</span>
+<span class="sd">        gammakl : three-way numpy array, shape=(K,L, v_features)</span>
+<span class="sd">            matrix of bloc&#39;s parameters</span>
+<span class="sd">        pi_k : numpy array, shape(K,)</span>
+<span class="sd">            vector of row cluster proportion</span>
+<span class="sd">        rho_l : numpy array, shape(K,)</span>
+<span class="sd">            vector of column cluster proportion</span>
+<span class="sd">        choice : string, take values in (&quot;Z&quot;, &quot;W&quot;, &quot;ZW&quot;)</span>
+<span class="sd">            considering the optimization of LL</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (H_z, H_w, LL, value)</span>
+<span class="sd">            (row entropy, column entropy, Log-likelihood, lower bound of log-likelihood)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># Nombre de covariates</span>
+
+        <span class="c1"># Reshape X matrix</span>
+        <span class="c1"># Xij_selec = x.reshape(n*d,v)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span> <span class="p">:</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_gpu</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="n">x_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">const</span><span class="p">)</span>
+            <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+        <span class="n">H_z</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="n">H_z</span> <span class="o">=</span> <span class="n">H_z</span> <span class="o">-</span> <span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]))</span>
+        <span class="n">H_w</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+                <span class="n">H_w</span> <span class="o">=</span> <span class="n">H_w</span> <span class="o">-</span> <span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">]))</span>
+
+        <span class="n">z_weight</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="n">z_weight</span> <span class="o">=</span> <span class="n">z_weight</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">z</span><span class="p">[:,</span> <span class="n">k</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pi_k</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+
+        <span class="n">w_weight</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+            <span class="n">w_weight</span> <span class="o">=</span> <span class="n">w_weight</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="p">[:,</span> <span class="n">l</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rho_l</span><span class="p">[</span><span class="n">l</span><span class="p">]))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span> <span class="p">:</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">x_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">x_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">xj</span><span class="p">)</span>
+            <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+        <span class="n">LL</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">cpt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">gamma_all</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="n">z_k</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">z_k_t</span> <span class="o">=</span> <span class="n">z_k</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">z_k_t_xi</span> <span class="o">=</span> <span class="n">z_k_t</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+
+            <span class="n">w_l</span> <span class="o">=</span> <span class="n">w</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+            <span class="n">w_l_xj</span> <span class="o">=</span> <span class="n">w_l</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xj</span><span class="p">)</span>
+
+            <span class="n">gkl</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+            <span class="n">div_gkl_gamma_all</span> <span class="o">=</span> <span class="p">(</span><span class="n">gkl</span> <span class="o">/</span> <span class="n">gamma_all</span><span class="p">)</span>   <span class="o">+</span> <span class="mf">1.e-9</span>
+
+            <span class="n">log_gkl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">div_gkl_gamma_all</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+            <span class="n">xkxl</span> <span class="o">=</span> <span class="n">z_k_t_xi</span> <span class="o">*</span> <span class="n">w_l_xj</span>
+            <span class="n">xkxl_gamma</span> <span class="o">=</span> <span class="n">xkxl</span> <span class="o">*</span> <span class="p">(</span><span class="n">gkl</span> <span class="o">-</span> <span class="n">gamma_all</span><span class="p">)</span>
+            <span class="c1"># print(&#39;xkxl.shape&#39;, xkxl.shape)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span><span class="p">:</span>
+                <span class="n">zx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ijk,il&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z_k</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">zx</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ijk,il&#39;</span><span class="p">,</span> <span class="n">x_gpu</span><span class="p">,</span> <span class="n">z_k</span><span class="p">)</span>
+                <span class="n">zx</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">zx</span><span class="p">)</span>
+                <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+
+            <span class="n">zx</span> <span class="o">=</span> <span class="n">zx</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+            <span class="n">zxw</span> <span class="o">=</span> <span class="n">w_l</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">zx</span><span class="p">)</span>
+            <span class="n">zxw_gamma</span> <span class="o">=</span> <span class="n">zxw</span> <span class="o">*</span> <span class="n">log_gkl</span>
+
+            <span class="n">N_log_gamma</span> <span class="o">=</span> <span class="n">const</span> <span class="o">/</span> <span class="n">K</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">gamma_all</span><span class="p">)</span> <span class="o">-</span> <span class="n">gamma_all</span> <span class="o">*</span> <span class="n">const</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+            <span class="n">den</span> <span class="o">=</span> <span class="n">zxw_gamma</span> <span class="o">-</span> <span class="n">xkxl_gamma</span> <span class="o">+</span> <span class="n">N_log_gamma</span>
+            <span class="c1"># print((den*gkl).shape)</span>
+            <span class="n">LL</span> <span class="o">=</span> <span class="n">LL</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">den</span><span class="p">)</span>
+
+            <span class="n">cpt</span> <span class="o">=</span> <span class="n">cpt</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="c1"># LL  = LL + ((-1)*n*d*np.log(2*np.pi))</span>
+
+
+        <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;ZW&quot;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">z_weight</span> <span class="o">+</span> <span class="n">w_weight</span> <span class="o">+</span> <span class="n">LL</span>  <span class="c1"># + H_z + H_w</span>
+        <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">z_weight</span> <span class="o">+</span> <span class="n">LL</span> <span class="o">+</span> <span class="n">H_z</span>
+        <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;W&quot;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">w_weight</span> <span class="o">+</span> <span class="n">LL</span> <span class="o">+</span> <span class="n">H_w</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">H_z</span><span class="p">,</span> <span class="n">H_w</span><span class="p">,</span> <span class="n">LL</span><span class="p">,</span> <span class="n">value</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_fit_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">random_state</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform one run of Tensor co-clustering.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</span>
+<span class="sd">            Tensor to be analyzed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span>
+
+        <span class="n">bool_fuzzy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fuzzy</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_row</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">random_init</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">random_state</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_row</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="n">w</span> <span class="o">=</span> <span class="n">random_init</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">random_state</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_col</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="c1">########################################################</span>
+
+
+        <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">nbr_covariates</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span> <span class="p">:</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_gpu</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">data_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">const</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">const</span><span class="p">)</span>
+            <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+        <span class="c1">########################################################</span>
+        <span class="n">gammakl_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gammakl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;les gammakl_hat&quot;</span><span class="p">,</span> <span class="n">gammakl_hat</span><span class="p">)</span>
+        <span class="n">pi_k_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_k</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;proportion lignes&quot;</span><span class="p">,</span> <span class="n">pi_k_hat</span><span class="p">)</span>
+        <span class="n">rho_l_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_l</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;proportion colonnes&quot;</span><span class="p">,</span> <span class="n">rho_l_hat</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F_c</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">gammakl_hat</span><span class="p">,</span> <span class="n">pi_k_hat</span><span class="p">,</span> <span class="n">rho_l_hat</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s1">&#39;ZW&#39;</span><span class="p">)</span>
+        <span class="n">fc</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;objective function&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="p">)</span>
+        <span class="c1">########################################################</span>
+        <span class="n">iteration_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span>
+        <span class="n">iteration_z</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">iteration_w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+        <span class="c1">#################################</span>
+        <span class="n">dessiner_courbe_evol_gammaKK</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">iteration_n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="n">dessiner_courbe_evol_gammaKK</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">gammakl_hat</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="p">:])</span>
+                <span class="c1">#################################</span>
+        <span class="c1">########################################################</span>
+        <span class="c1">#################################</span>
+        <span class="c1"># Début de l&#39;algorithme BLVEM</span>
+        <span class="c1">#################################</span>
+        <span class="n">LL</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">LL</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+        <span class="n">fc_previous</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">change</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">GPU_exist</span> <span class="p">:</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">data_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">data_gpu</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">xj</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(</span><span class="n">xj</span><span class="p">)</span>
+            <span class="n">cp</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">Stream</span><span class="o">.</span><span class="n">null</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="n">change</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">iteration_n</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;iteration n: &quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+            <span class="n">t_z</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">t_z</span> <span class="o">&lt;</span> <span class="n">iteration_z</span><span class="p">:</span>
+                <span class="c1">#print(&quot;iteration t_z :&quot;, t_z)</span>
+                <span class="c1"># E-step :</span>
+
+
+                <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">K</span><span class="p">)))</span> <span class="o">+</span> <span class="mf">1.e-9</span>
+                <span class="n">gamma_all</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl_hat</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                    <span class="n">xi_1</span> <span class="o">=</span> <span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                    <span class="n">xij</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                        <span class="n">pik</span> <span class="o">=</span> <span class="n">pi_k_hat</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                        <span class="n">gammakl_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl_hat</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                        <span class="n">div_gkl_gamma_all</span> <span class="o">=</span> <span class="n">gammakl_values</span> <span class="o">/</span> <span class="n">gamma_all</span>
+                        <span class="n">loggammakl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">div_gkl_gamma_all</span><span class="p">)</span>
+                        <span class="n">part1</span> <span class="o">=</span> <span class="n">xi_1</span> <span class="o">*</span> <span class="n">xj</span>
+                        <span class="c1"># print(&#39;part1&#39;, part1.shape)</span>
+                        <span class="n">part2</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl_values</span> <span class="o">-</span> <span class="n">gamma_all</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="n">part1</span>
+                        <span class="c1"># print(&#39;part2&#39;, part2.shape)</span>
+                        <span class="n">part3</span> <span class="o">=</span> <span class="n">xij</span> <span class="o">*</span> <span class="n">loggammakl</span>
+                        <span class="n">sum_jl</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">k</span><span class="p">:</span>
+                                <span class="n">wjl</span> <span class="o">=</span> <span class="n">w</span><span class="p">[:,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                                <span class="c1"># print(&#39;part3&#39;, part3.shape)</span>
+                                <span class="n">part4</span> <span class="o">=</span> <span class="n">wjl</span> <span class="o">*</span> <span class="p">(</span><span class="n">part2</span> <span class="o">+</span> <span class="n">part3</span><span class="p">)</span>  <span class="c1">#</span>
+                                <span class="c1"># print(&#39;part4&#39;, part4.shape)</span>
+                                <span class="n">sum_jl</span> <span class="o">=</span> <span class="n">sum_jl</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">part4</span><span class="p">)</span>
+
+                        <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pik</span><span class="p">)</span> <span class="o">+</span> <span class="n">sum_jl</span>
+
+                    <span class="c1"># ind_max_r = np.argmax(z[i,:] )</span>
+                    <span class="c1"># z[i,:]  = 0 + 1.e-10</span>
+                    <span class="c1"># z[i,ind_max_r] = 1</span>
+                    <span class="k">if</span> <span class="n">bool_fuzzy</span><span class="o">==</span> <span class="kc">True</span> <span class="p">:</span>
+                         <span class="c1">#print(&quot;soft&quot;)</span>
+                         <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+                         <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]))</span> <span class="o">+</span> <span class="mf">1.e-5</span>
+                    <span class="k">else</span><span class="p">:</span>
+                         <span class="c1">#print(&quot;hard&quot;)</span>
+                         <span class="n">ind_max_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+                         <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">+</span> <span class="mf">1.e-10</span>
+                         <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">ind_max_r</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="c1"># print(z)</span>
+                <span class="c1"># M-step :</span>
+                <span class="n">pi_k_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_k</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+                <span class="n">gammakl_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gammakl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+                <span class="c1"># Calculer LL :</span>
+
+                <span class="n">t_z</span> <span class="o">=</span> <span class="n">t_z</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="n">t_w</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">t_w</span> <span class="o">&lt;</span> <span class="n">iteration_w</span><span class="p">:</span>
+                <span class="c1">#print(&quot;iteration t_w :&quot;, t_w)</span>
+                <span class="c1"># E-step :</span>
+                <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="n">K</span><span class="p">)))</span> <span class="o">+</span> <span class="mf">1.e-9</span>
+
+                <span class="n">gamma_all</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl_hat</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+                    <span class="n">xj_1</span> <span class="o">=</span> <span class="n">xj</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                    <span class="n">xij</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="n">j</span><span class="p">,</span> <span class="p">:])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                        <span class="n">rohl</span> <span class="o">=</span> <span class="n">rho_l_hat</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+                        <span class="n">gammakl_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl_hat</span><span class="p">[</span><span class="n">l</span><span class="p">][</span><span class="n">l</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_covariates</span><span class="p">)</span>
+                        <span class="n">div_gkl_gamma_all</span> <span class="o">=</span> <span class="n">gammakl_values</span> <span class="o">/</span> <span class="n">gamma_all</span>
+                        <span class="n">loggammakl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">div_gkl_gamma_all</span><span class="p">)</span>
+                        <span class="n">part1</span> <span class="o">=</span> <span class="n">xj_1</span> <span class="o">*</span> <span class="n">xi</span>
+                        <span class="c1"># print(&#39;part1&#39;, part1.shape)</span>
+                        <span class="n">part2</span> <span class="o">=</span> <span class="p">(</span><span class="n">gammakl_values</span> <span class="o">-</span> <span class="n">gamma_all</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="n">part1</span>
+                        <span class="c1"># print(&#39;part2&#39;, part2.shape)</span>
+                        <span class="n">part3</span> <span class="o">=</span> <span class="n">xij</span> <span class="o">*</span> <span class="n">loggammakl</span>
+                        <span class="n">sum_ik</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="n">l</span><span class="p">:</span>
+                                <span class="n">zik</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+                                <span class="c1"># print(&#39;part3&#39;, part3.shape)</span>
+                                <span class="n">part4</span> <span class="o">=</span> <span class="n">zik</span> <span class="o">*</span> <span class="p">(</span><span class="n">part2</span> <span class="o">+</span> <span class="n">part3</span><span class="p">)</span>  <span class="c1">#</span>
+                                <span class="c1"># print(&#39;part4&#39;, part4.shape)</span>
+                                <span class="n">sum_ik</span> <span class="o">=</span> <span class="n">sum_ik</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">part4</span><span class="p">)</span>
+
+                        <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">rohl</span><span class="p">)</span> <span class="o">+</span> <span class="n">sum_ik</span>
+
+
+                    <span class="k">if</span> <span class="n">bool_fuzzy</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="c1">#print(&quot;soft&quot;)</span>
+                        <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:])</span>
+                        <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]))</span> <span class="o">+</span> <span class="mf">1.e-5</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1">#print(&quot;hard&quot;)</span>
+                        <span class="n">ind_max_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span> <span class="p">)</span>
+                        <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span>   <span class="o">=</span> <span class="mi">0</span> <span class="o">+</span> <span class="mf">1.e-10</span>
+                        <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">ind_max_c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="c1"># M-step :</span>
+                <span class="n">rho_l_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rho_l</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+                <span class="n">gammakl_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gammakl</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+                <span class="c1"># Calcul LL :</span>
+
+                <span class="n">t_w</span> <span class="o">=</span> <span class="n">t_w</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                    <span class="n">dessiner_courbe_evol_gammaKK</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">gammakl_hat</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="p">:])</span>
+
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">F_c</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">gammakl_hat</span><span class="p">,</span> <span class="n">pi_k_hat</span><span class="p">,</span> <span class="n">rho_l_hat</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s1">&#39;ZW&#39;</span><span class="p">)</span>
+            <span class="n">fc</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">LL</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;fc value&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">fc</span> <span class="o">-</span> <span class="n">fc_previous</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                <span class="n">fc_previous</span> <span class="o">=</span> <span class="n">fc</span>
+                <span class="n">change</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">LL</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fc</span><span class="p">)</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">+</span><span class="mi">1</span>
+            <span class="k">else</span> <span class="p">:</span>
+                <span class="n">change</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="n">t_arret</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">dessiner_courbe_evol_gammaKK</span> <span class="o">=</span> <span class="n">dessiner_courbe_evol_gammaKK</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:(</span><span class="n">t_arret</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="c1">########################################################</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterions</span> <span class="o">=</span> <span class="n">LL</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">fc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">row_labels_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column_labels_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl</span> <span class="o">=</span> <span class="n">gammakl_hat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kl_evolution</span> <span class="o">=</span> <span class="n">dessiner_courbe_evol_gammaKK</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Z</span> <span class="o">=</span> <span class="n">z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">w</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Rafika Boutalbi
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

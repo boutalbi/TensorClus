@@ -1,0 +1,1285 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation for the Code &mdash; TensorClus 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> TensorClus
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Documentation for the Code</a><ul>
+<li><a class="reference internal" href="#module-TensorClus.reader.load">TensorClus reader</a></li>
+<li><a class="reference internal" href="#tensorclus-decomposition">TensorClus decomposition</a></li>
+<li><a class="reference internal" href="#tensorclus-coclustering">TensorClus coclustering</a></li>
+<li><a class="reference internal" href="#tensorclus-vizualisation">TensorClus vizualisation</a></li>
+<li><a class="reference internal" href="#module-TensorClus.tests.input_checking">TensorClus tests</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">TensorClus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Documentation for the Code</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentation-for-the-code">
+<h1>Documentation for the Code<a class="headerlink" href="#documentation-for-the-code" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="module-TensorClus.reader.load">
+<span id="tensorclus-reader"></span><h2>TensorClus reader<a class="headerlink" href="#module-TensorClus.reader.load" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.reader</span></code> module provides functions to load and read
+different data fprmat.</p>
+<dl class="py function">
+<dt id="TensorClus.reader.load.load_dataset">
+<code class="sig-prename descclassname">TensorClus.reader.load.</code><code class="sig-name descname">load_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datasetName</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/reader/load.html#load_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.reader.load.load_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load one of availble dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>datasetName</strong> (<em>str</em>) – the name of dataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>tensor</em> – three-way numpy array</p></li>
+<li><p><em>labels</em> – true row classes</p></li>
+<li><p><em>slices</em> – slices name</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.reader.load.read_txt_tensor">
+<code class="sig-prename descclassname">TensorClus.reader.load.</code><code class="sig-name descname">read_txt_tensor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filePath</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/reader/load.html#read_txt_tensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.reader.load.read_txt_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>read tensor data from text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filePath</strong> (<em>str</em>) – the path of file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>three-way numpy array</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.reader.load.save_txt_tensor">
+<code class="sig-prename descclassname">TensorClus.reader.load.</code><code class="sig-name descname">save_txt_tensor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tensor</span></em>, <em class="sig-param"><span class="n">fileName</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/reader/load.html#save_txt_tensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.reader.load.save_txt_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>save tensor data as a text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tensor</strong> (<em>tensor array</em>)</p></li>
+<li><p><strong>filePath</strong> (<em>str</em>) – the path of file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="tensorclus-decomposition">
+<h2>TensorClus decomposition<a class="headerlink" href="#tensorclus-decomposition" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-TensorClus.decomposition.decomposition_with_clustering"></span><p>The <a class="reference internal" href="#module-TensorClus.decomposition.decomposition_with_clustering" title="TensorClus.decomposition.decomposition_with_clustering"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.decomposition.decomposition_with_clustering</span></code></a> module provides a
+class with common methods for multiple clustering alorihtm from decomposition results.</p>
+<dl class="py class">
+<dt id="TensorClus.decomposition.decomposition_with_clustering.DecompositionWithClustering">
+<em class="property">class </em><code class="sig-prename descclassname">TensorClus.decomposition.decomposition_with_clustering.</code><code class="sig-name descname">DecompositionWithClustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_clusters</span><span class="o">=</span><span class="default_value">[2, 2, 2]</span></em>, <em class="sig-param"><span class="n">modes</span><span class="o">=</span><span class="default_value">[1, 2, 3]</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'Kmeans++'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/decomposition/decomposition_with_clustering.html#DecompositionWithClustering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.decomposition.decomposition_with_clustering.DecompositionWithClustering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clustering from decomposition results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_clusters</strong> (<em>array-like, optional, default: [2,2,2]</em>) – Number of row clusters to form</p></li>
+<li><p><strong>modes</strong> (<em>array-like, optional, default: [1,2,3]</em>) – Selected modes for clustering</p></li>
+<li><p><strong>algorithm</strong> (<em>string, optional, default: “kmeans++”</em>) – Selected algorithm for clustering</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="TensorClus.decomposition.decomposition_with_clustering.DecompositionWithClustering.labels_">
+<code class="sig-name descname">labels_</code><a class="headerlink" href="#TensorClus.decomposition.decomposition_with_clustering.DecompositionWithClustering.labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>clustering label of each row</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_rows,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.decomposition.decomposition_with_clustering.DecompositionWithClustering.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/decomposition/decomposition_with_clustering.html#DecompositionWithClustering.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.decomposition.decomposition_with_clustering.DecompositionWithClustering.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Tensor co-clustering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>decomposition results</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tensorclus-coclustering">
+<h2>TensorClus coclustering<a class="headerlink" href="#tensorclus-coclustering" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-TensorClus.coclustering.sparseTensorCoclustering"></span><p>The <a class="reference internal" href="#module-TensorClus.coclustering.sparseTensorCoclustering" title="TensorClus.coclustering.sparseTensorCoclustering"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.coclustering.sparseTensorCoclustering</span></code></a> module provides an implementation
+of a Sparse tensor co-clustering algorithm.</p>
+<dl class="py class">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson">
+<em class="property">class </em><code class="sig-prename descclassname">TensorClus.coclustering.sparseTensorCoclustering.</code><code class="sig-name descname">SparseTensorCoclusteringPoisson</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">fuzzy</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">init_row</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">init_col</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">n_init</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">gpu</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/sparseTensorCoclustering.html#SparseTensorCoclusteringPoisson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tensor Latent Block Model for Poisson distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_row_clusters</strong> (<em>int, optional, default: 2</em>) – Number of row clusters to form</p></li>
+<li><p><strong>n_col_clusters</strong> (<em>int, optional, default: 2</em>) – Number of column clusters to form</p></li>
+<li><p><strong>fuzzy</strong> (<em>boolean, optional, default: True</em>) – Provide fuzzy clustering, If fuzzy is False
+a hard clustering is performed</p></li>
+<li><p><strong>init_row</strong> (<em>numpy array or scipy sparse matrix,         shape (n_rows, K), optional, default: None</em>) – Initial row labels</p></li>
+<li><p><strong>init_col</strong> (<em>numpy array or scipy sparse matrix,         shape (n_cols, L), optional, default: None</em>) – Initial column labels</p></li>
+<li><p><strong>max_iter</strong> (<em>int, optional, default: 20</em>) – Maximum number of iterations</p></li>
+<li><p><strong>n_init</strong> (<em>int, optional, default: 1</em>) – Number of time the algorithm will be run with different
+initializations. The final results will be the best output of <cite>n_init</cite>
+consecutive runs.</p></li>
+<li><p><strong>random_state</strong> (<em>integer or numpy.RandomState, optional</em>) – The generator used to initialize the centers. If an integer is
+given, it fixes the seed. Defaults to the global numpy random
+number generator.</p></li>
+<li><p><strong>tol</strong> (<em>float, default: 1e-9</em>) – Relative tolerance with regards to criterion to declare convergence</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.row_labels_">
+<code class="sig-name descname">row_labels_</code><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.row_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each row</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_rows,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.column_labels_">
+<code class="sig-name descname">column_labels_</code><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.column_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_cols,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.gamma_kl">
+<code class="sig-name descname">gamma_kl</code><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.gamma_kl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value <span class="math notranslate nohighlight">\(\frac{p_{kl}}{p_{k.} \times p_{.l}}\)</span> for each row
+cluster k and column cluster l</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (k,l,v)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.gamma_kl_evolution">
+<code class="sig-name descname">gamma_kl_evolution</code><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.gamma_kl_evolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of gamma_kl of each bicluster according to iterations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape(k,l,max_iter)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.F_c">
+<code class="sig-name descname">F_c</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em>, <em class="sig-param"><span class="n">gammakl</span></em>, <em class="sig-param"><span class="n">pi_k</span></em>, <em class="sig-param"><span class="n">rho_l</span></em>, <em class="sig-param"><span class="n">choice</span><span class="o">=</span><span class="default_value">'ZW'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/sparseTensorCoclustering.html#SparseTensorCoclusteringPoisson.F_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.F_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute fuzzy log-likelihood (LL) criterion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+<li><p><strong>gammakl</strong> (<em>three-way numpy array, shape=(K,L, v_features)</em>) – matrix of bloc’s parameters</p></li>
+<li><p><strong>pi_k</strong> (<em>numpy array, shape(K,)</em>) – vector of row cluster proportion</p></li>
+<li><p><strong>rho_l</strong> (<em>numpy array, shape(K,)</em>) – vector of column cluster proportion</p></li>
+<li><p><strong>choice</strong> (<em>string, take values in (“Z”, “W”, “ZW”)</em>) – considering the optimization of LL</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(row entropy, column entropy, Log-likelihood, lower bound of log-likelihood)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(H_z, H_w, LL, value)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/sparseTensorCoclustering.html#SparseTensorCoclusteringPoisson.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Tensor co-clustering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.gammakl">
+<code class="sig-name descname">gammakl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/sparseTensorCoclustering.html#SparseTensorCoclusteringPoisson.gammakl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.gammakl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Tensor co-clustering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>row partition</em>)</p></li>
+<li><p><strong>w</strong> (<em>column partition</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>three-way numpy array, shape=(K,L, v_features)
+Computed parameters per block</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>gamma_kl_mat</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.pi_k">
+<code class="sig-name descname">pi_k</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/sparseTensorCoclustering.html#SparseTensorCoclusteringPoisson.pi_k"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.pi_k" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute row proportion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy array, shape=(K)
+proportion of row clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pi_k_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.rho_l">
+<code class="sig-name descname">rho_l</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/sparseTensorCoclustering.html#SparseTensorCoclusteringPoisson.rho_l"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson.rho_l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute column proportion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy array, shape=(L)
+proportion of column clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rho_l_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-TensorClus.coclustering.tensorCoclusteringPoisson"></span><p>The <a class="reference internal" href="#module-TensorClus.coclustering.tensorCoclusteringPoisson" title="TensorClus.coclustering.tensorCoclusteringPoisson"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.coclustering.tensorCoclusteringPoisson</span></code></a> module provides an implementation
+of a tensor co-clustering algorithm for count three-way tensor.</p>
+<dl class="py class">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson">
+<em class="property">class </em><code class="sig-prename descclassname">TensorClus.coclustering.tensorCoclusteringPoisson.</code><code class="sig-name descname">TensorCoclusteringPoisson</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_row_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">n_col_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">fuzzy</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">init_row</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">init_col</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">n_init</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">gpu</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringPoisson.html#TensorCoclusteringPoisson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tensor Latent Block Model for Poisson distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_row_clusters</strong> (<em>int, optional, default: 2</em>) – Number of row clusters to form</p></li>
+<li><p><strong>n_col_clusters</strong> (<em>int, optional, default: 2</em>) – Number of column clusters to form</p></li>
+<li><p><strong>fuzzy</strong> (<em>boolean, optional, default: True</em>) – Provide fuzzy clustering, If fuzzy is False
+a hard clustering is performed</p></li>
+<li><p><strong>init_row</strong> (<em>numpy array or scipy sparse matrix,         shape (n_rows, K), optional, default: None</em>) – Initial row labels</p></li>
+<li><p><strong>init_col</strong> (<em>numpy array or scipy sparse matrix,         shape (n_cols, L), optional, default: None</em>) – Initial column labels</p></li>
+<li><p><strong>max_iter</strong> (<em>int, optional, default: 20</em>) – Maximum number of iterations</p></li>
+<li><p><strong>n_init</strong> (<em>int, optional, default: 1</em>) – Number of time the algorithm will be run with different
+initializations. The final results will be the best output of <cite>n_init</cite>
+consecutive runs.</p></li>
+<li><p><strong>random_state</strong> (<em>integer or numpy.RandomState, optional</em>) – The generator used to initialize the centers. If an integer is
+given, it fixes the seed. Defaults to the global numpy random
+number generator.</p></li>
+<li><p><strong>tol</strong> (<em>float, default: 1e-9</em>) – Relative tolerance with regards to criterion to declare convergence</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.row_labels_">
+<code class="sig-name descname">row_labels_</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.row_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each row</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_rows,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.column_labels_">
+<code class="sig-name descname">column_labels_</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.column_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_cols,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.gamma_kl">
+<code class="sig-name descname">gamma_kl</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.gamma_kl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value <span class="math notranslate nohighlight">\(\frac{p_{kl}}{p_{k.} \times p_{.l}}\)</span> for each row
+cluster k and column cluster l</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (k,l,v)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.gamma_kl_evolution">
+<code class="sig-name descname">gamma_kl_evolution</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.gamma_kl_evolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of gamma_kl of each bicluster according to iterations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape(k,l,max_iter)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.F_c">
+<code class="sig-name descname">F_c</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em>, <em class="sig-param"><span class="n">gammakl</span></em>, <em class="sig-param"><span class="n">pi_k</span></em>, <em class="sig-param"><span class="n">rho_l</span></em>, <em class="sig-param"><span class="n">choice</span><span class="o">=</span><span class="default_value">'ZW'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringPoisson.html#TensorCoclusteringPoisson.F_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.F_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute fuzzy log-likelihood (LL) criterion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+<li><p><strong>gammakl</strong> (<em>three-way numpy array, shape=(K,L, v_features)</em>) – matrix of bloc’s parameters</p></li>
+<li><p><strong>pi_k</strong> (<em>numpy array, shape(K,)</em>) – vector of row cluster proportion</p></li>
+<li><p><strong>rho_l</strong> (<em>numpy array, shape(K,)</em>) – vector of column cluster proportion</p></li>
+<li><p><strong>choice</strong> (<em>string, take values in (“Z”, “W”, “ZW”)</em>) – considering the optimization of LL</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(row entropy, column entropy, Log-likelihood, lower bound of log-likelihood)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(H_z, H_w, LL, value)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringPoisson.html#TensorCoclusteringPoisson.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Tensor co-clustering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.gammakl">
+<code class="sig-name descname">gammakl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringPoisson.html#TensorCoclusteringPoisson.gammakl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.gammakl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute gamma_kl per bloc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>three-way numpy array, shape=(K,L, v_features)
+Computed parameters per block</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>gamma_kl_mat</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.pi_k">
+<code class="sig-name descname">pi_k</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringPoisson.html#TensorCoclusteringPoisson.pi_k"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.pi_k" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute row proportion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy array, shape=(K)
+proportion of row clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pi_k_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.rho_l">
+<code class="sig-name descname">rho_l</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringPoisson.html#TensorCoclusteringPoisson.rho_l"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringPoisson.TensorCoclusteringPoisson.rho_l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute column proportion.
+:Parameters: <strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>numpy array, shape=(L)
+proportion of column clusters</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>rho_l_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-TensorClus.coclustering.tensorCoclusteringGaussian"></span><p>The <a class="reference internal" href="#module-TensorClus.coclustering.tensorCoclusteringGaussian" title="TensorClus.coclustering.tensorCoclusteringGaussian"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.coclustering.tensorCoclusteringGaussian</span></code></a> module provides an implementation
+of a tensor co-clustering algorithm for continous three-way tensor.</p>
+<dl class="py class">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian">
+<em class="property">class </em><code class="sig-prename descclassname">TensorClus.coclustering.tensorCoclusteringGaussian.</code><code class="sig-name descname">TensorCoclusteringGaussian</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_row_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">n_col_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">fuzzy</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">parsimonious</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">init_row</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">init_col</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">n_init</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">gpu</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringGaussian.html#TensorCoclusteringGaussian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tensor Latent Block Model for Normal distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_row_clusters</strong> (<em>int, optional, default: 2</em>) – Number of row clusters to form</p></li>
+<li><p><strong>n_col_clusters</strong> (<em>int, optional, default: 2</em>) – Number of column clusters to form</p></li>
+<li><p><strong>fuzzy</strong> (<em>boolean, optional, default: True</em>) – Provide fuzzy clustering, If fuzzy is False
+a hard clustering is performed</p></li>
+<li><p><strong>parsimonious</strong> (<em>boolean, optional, default: True</em>) – Provide parsimonious model, If parsimonious False
+sigma is computed at each iteration</p></li>
+<li><p><strong>init_row</strong> (<em>numpy array or scipy sparse matrix,         shape (n_rows, K), optional, default: None</em>) – Initial row labels</p></li>
+<li><p><strong>init_col</strong> (<em>numpy array or scipy sparse matrix,         shape (n_cols, L), optional, default: None</em>) – Initial column labels</p></li>
+<li><p><strong>max_iter</strong> (<em>int, optional, default: 20</em>) – Maximum number of iterations</p></li>
+<li><p><strong>n_init</strong> (<em>int, optional, default: 1</em>) – Number of time the algorithm will be run with different
+initializations. The final results will be the best output of <cite>n_init</cite>
+consecutive runs.</p></li>
+<li><p><strong>random_state</strong> (<em>integer or numpy.RandomState, optional</em>) – The generator used to initialize the centers. If an integer is
+given, it fixes the seed. Defaults to the global numpy random
+number generator.</p></li>
+<li><p><strong>tol</strong> (<em>float, default: 1e-9</em>) – Relative tolerance with regards to criterion to declare convergence</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.row_labels_">
+<code class="sig-name descname">row_labels_</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.row_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each row</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_rows,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.column_labels_">
+<code class="sig-name descname">column_labels_</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.column_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_cols,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.mu_kl">
+<code class="sig-name descname">mu_kl</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.mu_kl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value :math: mean vector for each row
+cluster k and column cluster l</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (k,l,v)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.sigma_kl_">
+<code class="sig-name descname">sigma_kl_</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.sigma_kl_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of covariance matrix for each row
+cluster k and column cluster</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (k,l,v,v)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.F_c">
+<code class="sig-name descname">F_c</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em>, <em class="sig-param"><span class="n">mukl</span></em>, <em class="sig-param"><span class="n">sigma_x_kl</span></em>, <em class="sig-param"><span class="n">pi_k</span></em>, <em class="sig-param"><span class="n">rho_l</span></em>, <em class="sig-param"><span class="n">choice</span><span class="o">=</span><span class="default_value">'ZW'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringGaussian.html#TensorCoclusteringGaussian.F_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.F_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute fuzzy log-likelihood (LL) criterion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+<li><p><strong>mukl</strong> (<em>three-way numpy array, shape=(K,L, v_features)</em>) – matrix of mean parameter pe bloc</p></li>
+<li><p><strong>sigma_x_kl</strong> (<em>Four-way numpy array, shape=(K,L,v_features, v_features)</em>) – tensor of sigma matrices for all blocks</p></li>
+<li><p><strong>pi_k</strong> (<em>numpy array, shape(K,)</em>) – vector of row cluster proportion</p></li>
+<li><p><strong>rho_l</strong> (<em>numpy array, shape(K,)</em>) – vector of column cluster proportion</p></li>
+<li><p><strong>choice</strong> (<em>string, take values in (“Z”, “W”, “ZW”)</em>) – considering the optimization of LL</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(row entropy, column entropy, Log-likelihood, lower bound of log-likelihood)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(H_z, H_w, LL, value)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringGaussian.html#TensorCoclusteringGaussian.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Tensor co-clustering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.mukl">
+<code class="sig-name descname">mukl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringGaussian.html#TensorCoclusteringGaussian.mukl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.mukl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the mean vector mu_kl per bloc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>three-way numpy array, shape=(K,L, v_features)
+Computed parameters per block</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mukl_mat</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.pi_k">
+<code class="sig-name descname">pi_k</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringGaussian.html#TensorCoclusteringGaussian.pi_k"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.pi_k" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute row proportion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy array, shape=(K)
+proportion of row clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pi_k_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.rho_l">
+<code class="sig-name descname">rho_l</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringGaussian.html#TensorCoclusteringGaussian.rho_l"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.rho_l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute column proportion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy array, shape=(L)
+proportion of column clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rho_l_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.sigma_x_kl">
+<code class="sig-name descname">sigma_x_kl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em>, <em class="sig-param"><span class="n">mukl</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringGaussian.html#TensorCoclusteringGaussian.sigma_x_kl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringGaussian.TensorCoclusteringGaussian.sigma_x_kl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the mean vector sigma_kl per bloc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+<li><p><strong>mukl</strong> (<em>numpy array, shape(K,L, v_features)</em>) – tensor of mukl values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>three-way numpy array
+Computed the covariance parameters per block</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sigma_x_kl_mat</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-TensorClus.coclustering.tensorCoclusteringBernoulli"></span><p>The <a class="reference internal" href="#module-TensorClus.coclustering.tensorCoclusteringBernoulli" title="TensorClus.coclustering.tensorCoclusteringBernoulli"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.coclustering.tensorCoclusteringBernoulli</span></code></a> module provides an implementation
+of a tensor co-clustering algorithm for binary three-way tensor.</p>
+<dl class="py class">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli">
+<em class="property">class </em><code class="sig-prename descclassname">TensorClus.coclustering.tensorCoclusteringBernoulli.</code><code class="sig-name descname">TensorCoclusteringBernoulli</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_row_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">n_col_clusters</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">fuzzy</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">init_row</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">init_col</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">n_init</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">gpu</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringBernoulli.html#TensorCoclusteringBernoulli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tensor Latent Block Model for Bernoulli distribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_row_clusters</strong> (<em>int, optional, default: 2</em>) – Number of row clusters to form</p></li>
+<li><p><strong>n_col_clusters</strong> (<em>int, optional, default: 2</em>) – Number of column clusters to form</p></li>
+<li><p><strong>fuzzy</strong> (<em>boolean, optional, default: True</em>) – Provide fuzzy clustering, If fuzzy is False
+a hard clustering is performed</p></li>
+<li><p><strong>init_row</strong> (<em>numpy array or scipy sparse matrix,         shape (n_rows, K), optional, default: None</em>) – Initial row labels</p></li>
+<li><p><strong>init_col</strong> (<em>numpy array or scipy sparse matrix,         shape (n_cols, L), optional, default: None</em>) – Initial column labels</p></li>
+<li><p><strong>max_iter</strong> (<em>int, optional, default: 20</em>) – Maximum number of iterations</p></li>
+<li><p><strong>n_init</strong> (<em>int, optional, default: 1</em>) – Number of time the algorithm will be run with different
+initializations. The final results will be the best output of <cite>n_init</cite>
+consecutive runs.</p></li>
+<li><p><strong>random_state</strong> (<em>integer or numpy.RandomState, optional</em>) – The generator used to initialize the centers. If an integer is
+given, it fixes the seed. Defaults to the global numpy random
+number generator.</p></li>
+<li><p><strong>tol</strong> (<em>float, default: 1e-9</em>) – Relative tolerance with regards to criterion to declare convergence</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.row_labels_">
+<code class="sig-name descname">row_labels_</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.row_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each row</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_rows,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.column_labels_">
+<code class="sig-name descname">column_labels_</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.column_labels_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bicluster label of each column</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (n_cols,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.mu_kl">
+<code class="sig-name descname">mu_kl</code><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.mu_kl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value :math: mean vector for each row
+cluster k and column cluster l</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array-like, shape (k,l,v)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.F_c">
+<code class="sig-name descname">F_c</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em>, <em class="sig-param"><span class="n">mukl</span></em>, <em class="sig-param"><span class="n">pi_k</span></em>, <em class="sig-param"><span class="n">rho_l</span></em>, <em class="sig-param"><span class="n">choice</span><span class="o">=</span><span class="default_value">'ZW'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringBernoulli.html#TensorCoclusteringBernoulli.F_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.F_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute fuzzy log-likelihood (LL) criterion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+<li><p><strong>mukl</strong> (<em>three-way numpy array, shape=(K,L, v_features)</em>) – matrix of mean parameter pe bloc</p></li>
+<li><p><strong>pi_k</strong> (<em>numpy array, shape(K,)</em>) – vector of row cluster proportion</p></li>
+<li><p><strong>rho_l</strong> (<em>numpy array, shape(K,)</em>) – vector of column cluster proportion</p></li>
+<li><p><strong>choice</strong> (<em>string, take values in (“Z”, “W”, “ZW”)</em>) – considering the optimization of LL</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(row entropy, column entropy, Log-likelihood, lower bound of log-likelihood)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(H_z, H_w, LL, value)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringBernoulli.html#TensorCoclusteringBernoulli.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Tensor co-clustering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.mukl">
+<code class="sig-name descname">mukl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringBernoulli.html#TensorCoclusteringBernoulli.mukl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.mukl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the mean vector mu_kl per bloc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>three-way numpy array, shape=(n_row_objects,d_col_objects, v_features)</em>) – Tensor to be analyzed</p></li>
+<li><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p></li>
+<li><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>three-way numpy array</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>mukl_mat</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.pi_k">
+<code class="sig-name descname">pi_k</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringBernoulli.html#TensorCoclusteringBernoulli.pi_k"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.pi_k" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute row proportion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>z</strong> (<em>numpy array, shape= (n_row_objects, K)</em>) – matrix of row partition</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy array, shape=(K)
+proportion of row clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pi_k_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.rho_l">
+<code class="sig-name descname">rho_l</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/coclustering/tensorCoclusteringBernoulli.html#TensorCoclusteringBernoulli.rho_l"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.coclustering.tensorCoclusteringBernoulli.TensorCoclusteringBernoulli.rho_l" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute column proportion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>w</strong> (<em>numpy array, shape(d_col_objects, L)</em>) – matrix of column partition</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>numpy array, shape=(L)
+proportion of column clusters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>rho_l_vect</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tensorclus-vizualisation">
+<h2>TensorClus vizualisation<a class="headerlink" href="#tensorclus-vizualisation" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-TensorClus.vizualisation"></span><p>The <a class="reference internal" href="#module-TensorClus.vizualisation" title="TensorClus.vizualisation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.vizualisation</span></code></a> module provides functions to visualize
+different measures or data.</p>
+<dl class="py function">
+<dt id="TensorClus.vizualisation.Plot_CoClust_axes_etiquette">
+<code class="sig-prename descclassname">TensorClus.vizualisation.</code><code class="sig-name descname">Plot_CoClust_axes_etiquette</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">fig</span></em>, <em class="sig-param"><span class="n">axes</span></em>, <em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">phiR</span></em>, <em class="sig-param"><span class="n">phiC</span></em>, <em class="sig-param"><span class="n">K</span></em>, <em class="sig-param"><span class="n">L</span></em>, <em class="sig-param"><span class="n">etiquette</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/vizualisation.html#Plot_CoClust_axes_etiquette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.vizualisation.Plot_CoClust_axes_etiquette" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot CoClustering results for each slice on specific axes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>title of figure</em>)</p></li>
+<li><p><strong>fig</strong> (<em>figure that includes all axes</em>)</p></li>
+<li><p><strong>axes</strong> (<em>list of axes corresponding to the number of slices</em>)</p></li>
+<li><p><strong>data</strong> (<em>tensor data</em>)</p></li>
+<li><p><strong>phiR</strong> (<em>row clustering partition</em>)</p></li>
+<li><p><strong>phiC</strong> (<em>row clustering partition</em>)</p></li>
+<li><p><strong>K</strong> (<em>number of row cluster</em>)</p></li>
+<li><p><strong>L</strong> (<em>number of columns cluster</em>)</p></li>
+<li><p><strong>etiquette</strong> (<em>name of slices</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.vizualisation.duplicates">
+<code class="sig-prename descclassname">TensorClus.vizualisation.</code><code class="sig-name descname">duplicates</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lst</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/vizualisation.html#duplicates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.vizualisation.duplicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find index of duplicated values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lst</strong> (<em>list of values</em>)</p></li>
+<li><p><strong>item</strong> (<em>values to determine</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>index of dipulicated values</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.vizualisation.generateColour">
+<code class="sig-prename descclassname">TensorClus.vizualisation.</code><code class="sig-name descname">generateColour</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/vizualisation.html#generateColour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.vizualisation.generateColour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate random color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>hex color</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.vizualisation.plot_logLikelihood_evolution">
+<code class="sig-prename descclassname">TensorClus.vizualisation.</code><code class="sig-name descname">plot_logLikelihood_evolution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">do_plot</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dpi</span><span class="o">=</span><span class="default_value">200</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/vizualisation.html#plot_logLikelihood_evolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.vizualisation.plot_logLikelihood_evolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot all intermediate loglikelihood for a model at each iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">TensorClus.coclustering</span></code>, Fitted model)</p></li>
+<li><p><strong>do_plot</strong> (<em>boolean, Whether the plot should be displayed. True by default. Disabling this allows users to handle displaying the plot themselves.</em>)</p></li>
+<li><p><strong>save</strong> (<em>boolean, False by default. Allowing save plot as image</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int, 200 by  default. Allowing to choose a specific resolution when saving image</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.vizualisation.plot_parameter_evolution">
+<code class="sig-prename descclassname">TensorClus.vizualisation.</code><code class="sig-name descname">plot_parameter_evolution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">do_plot</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dpi</span><span class="o">=</span><span class="default_value">200</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/vizualisation.html#plot_parameter_evolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.vizualisation.plot_parameter_evolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot all intermediate gammaKK parameters for a model at each iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">TensorClus.coclustering</span></code>, Fitted model)</p></li>
+<li><p><strong>do_plot</strong> (<em>boolean, Whether the plot should be displayed. True by default. Disabling this allows users to handle displaying the plot themselves.</em>)</p></li>
+<li><p><strong>save</strong> (<em>boolean, False by default. Allowing save plot as image</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int, 200 by  default. Allowing to choose a specific resolution when saving image</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.vizualisation.plot_slice_reorganisation">
+<code class="sig-prename descclassname">TensorClus.vizualisation.</code><code class="sig-name descname">plot_slice_reorganisation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">slicesName</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">do_plot</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dpi</span><span class="o">=</span><span class="default_value">200</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/vizualisation.html#plot_slice_reorganisation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.vizualisation.plot_slice_reorganisation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot all intermediate modularities for a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>tensor data</em>)</p></li>
+<li><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">TensorClus.coclustering.CoclustMod</span></code>, Fitted model)</p></li>
+<li><p><strong>slicesName</strong> (<em>list of slice names</em>)</p></li>
+<li><p><strong>do_plot</strong> (<em>boolean, Whether the plot should be displayed. True by default. Disabling this allows users to handle displaying the plot themselves.</em>)</p></li>
+<li><p><strong>save</strong> (<em>boolean, False by default. Allowing save plot as image</em>)</p></li>
+<li><p><strong>dpi</strong> (<em>int, 200 by  default. Allowing to choose a specific resolution when saving image</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-TensorClus.tests.input_checking">
+<span id="tensorclus-tests"></span><h2>TensorClus tests<a class="headerlink" href="#module-TensorClus.tests.input_checking" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">TensorClus.io.input_checking</span></code> module provides functions to check
+input tensors.</p>
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_array">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">pos</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an array contains numeric values with non empty rows nor
+columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – The input tensor array</p></li>
+<li><p><strong>pos</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, check if the values are positives</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the array is not a Numpy array or matrix or if the values are
+    not numeric.</p></li>
+<li><p><strong>ValueError</strong> – If the array contains empty rows or columns or contains NaN values, or
+    negative values (if <code class="docutils literal notranslate"><span class="pre">pos</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_numbers">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_numbers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">n_clusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given matrix has enough rows and columns for the given
+number of co-clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> – The input matrix</p></li>
+<li><p><strong>n_clusters</strong> (<em>int</em>) – Number of co-clusters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the data matrix has not enough rows or columns.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_numbers_clustering">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_numbers_clustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">n_clusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_numbers_clustering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_numbers_clustering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given matrix has enough rows and columns for the given
+number of clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> – The input matrix</p></li>
+<li><p><strong>n_clusters</strong> (<em>int</em>) – Number of clusters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the data matrix has not enough rows or columns.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_numbers_clusters">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_numbers_clusters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tensor</span></em>, <em class="sig-param"><span class="n">n_clusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_numbers_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_numbers_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given matrix has enough rows and columns for the given
+number of co-clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tensor</strong> – The input tensor</p></li>
+<li><p><strong>n_clusters</strong> (<em>int</em>) – Number of co-clusters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the data matrix has not enough rows or columns.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_numbers_clusters_non_diago">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_numbers_clusters_non_diago</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tensor</span></em>, <em class="sig-param"><span class="n">n_row_clusters</span></em>, <em class="sig-param"><span class="n">n_col_clusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_numbers_clusters_non_diago"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_numbers_clusters_non_diago" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given matrix has enough rows and columns for the given
+number of row and column clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tensor</strong> – The input tensor</p></li>
+<li><p><strong>n_row_clusters</strong> (<em>int</em>) – Number of row clusters</p></li>
+<li><p><strong>n_col_clusters</strong> (<em>int</em>) – Number of column clusters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the data matrix has not enough rows or columns.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_numbers_non_diago">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_numbers_non_diago</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">n_row_clusters</span></em>, <em class="sig-param"><span class="n">n_col_clusters</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_numbers_non_diago"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_numbers_non_diago" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the given matrix has enough rows and columns for the given
+number of row and column clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> – The input matrix</p></li>
+<li><p><strong>n_row_clusters</strong> (<em>int</em>) – Number of row clusters</p></li>
+<li><p><strong>n_col_clusters</strong> (<em>int</em>) – Number of column clusters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the data matrix has not enough rows or columns.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_positive">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_positive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_positive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_positive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if all values are positives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>numpy array or  matrix tensor</em>) – Matrix to be analyzed</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the matrix contains negative values.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>X</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array or scipy sparse matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_positive_tensor">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_positive_tensor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_positive_tensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_positive_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if all values are positives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>three-way numpy array</em>) – tensor to be analyzed</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the tensor contains negative values.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>X</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>three-way numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="TensorClus.tests.input_checking.check_tensor">
+<code class="sig-prename descclassname">TensorClus.tests.input_checking.</code><code class="sig-name descname">check_tensor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">pos</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TensorClus/tests/input_checking.html#check_tensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#TensorClus.tests.input_checking.check_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an array is a tensor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> – The input tensor array</p></li>
+<li><p><strong>pos</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, check if the values are positives</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the array is not a Numpy array or matrix or if the values are
+    not numeric.</p></li>
+<li><p><strong>ValueError</strong> – If the array contains empty rows or columns or contains NaN values, or
+    negative values (if <code class="docutils literal notranslate"><span class="pre">pos</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Rafika Boutalbi
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
