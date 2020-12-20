@@ -1,4 +1,4 @@
-#TensorClus
+# TensorClus
 
 TensorClus (Tensor Clustering) is a first Python library aiming to clustering and co-clustering of tensor data.
 It allows to easily perform tensor clustering trought decomposition or tensor learning and tensor algebra. 
