@@ -2,7 +2,7 @@
 
 TensorClus (Tensor Clustering) is a first Python library aiming to clustering and co-clustering of tensor data.
 It allows to easily perform tensor clustering trought decomposition or tensor learning and tensor algebra. 
-TensorClus allows easy interaction with other python packages such as NumPy, TensorFlow or TensorD, and run methods at scale on CPU or GPU.
+TensorClus allows easy interaction with other python packages such as NumPy, Tensorly, TensorFlow or TensorD, and run methods at scale on CPU or GPU.
 It supports of major operating systems namely Microsoft Windows, macOS, and Ubuntu.
 
 [![N|Solid](https://github.com/boutalbi/TensorClus/blob/master/BinaryTensorData.PNG?raw=true)](https://link.springer.com/article/10.1007/s41060-020-00205-5)
@@ -37,10 +37,10 @@ For installing TensorClus package use the following command
 pip install -U TensorClus
 ```
 
-To clone TensorC project from github
+To clone TensorClus project from github
 ```
 # clone the repository
-git clone https://github.com/TensorC/TensorC
+git clone https://github.com/boutalbi/TensorClus.git
 cd tensorly
 # Install in editable mode with `-e` or, equivalently, `--editable`
 pip install -e .
@@ -48,7 +48,7 @@ pip install -e .
 For more details about TensorClus, see  [Documentation](https://github.com/boutalbi/TensorClus/blob/main/TensorClust_Documentation.pdf).
 
 ### License
-TensorClus is released under the BSD 3-Clause License (refer to LISENSE file for details).
+TensorClus is released under the MIT License (refer to LISENSE file for details).
 
 ### Examples
 
