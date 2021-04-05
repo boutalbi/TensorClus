@@ -376,7 +376,11 @@ epub_exclude_files = ['search.html']
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))
+
+sys.path.insert(0, os.path.abspath("."))
+sys.path.insert(0, os.path.abspath("../"))
+sys.path.insert(1, os.path.dirname(os.path.abspath("../")) + os.sep + "TensorClus")
+
 sys.setrecursionlimit(1500)
 autodoc_mock_imports = ['coclust', 'matplotlib', 'pandas','numpy','pandas','scikit-learn','scipy','tensorflow','tensorly']
 # -- Project information -----------------------------------------------------
