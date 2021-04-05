@@ -16,8 +16,6 @@ TensorClus reader
 =====================
 .. automodule:: TensorClus.reader.load
    :members:
-.. automodule:: TensorClus.reader.load.load_dataset
-   :members:
 
 TensorClus decomposition
 =================
