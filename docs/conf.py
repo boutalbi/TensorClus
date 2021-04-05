@@ -20,10 +20,10 @@ import shlex
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('../'))
-
+sys.path.insert(0, os.path.abspath('../..'))
+sys.setrecursionlimit(1500)
 # -- General configuration ------------------------------------------------
-
+autodoc_mock_imports = ['coclust', 'matplotlib', 'pandas','numpy','pandas','scikit-learn','scipy','tensorflow','tensorly']
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
 
@@ -241,7 +241,7 @@ latex_elements = {
 #'figure_align': 'htbp',
 }
 
-autodoc_mock_imports = ['coclust', 'matplotlib', 'pandas','numpy','pandas','scikit-learn','scipy','tensorflow','tensorly']
+
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
