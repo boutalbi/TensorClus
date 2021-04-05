@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# cclust_package documentation build configuration file, created by
+# TensorClus documentation build configuration file, created by
 # sphinx-quickstart on Sat Oct 31 21:32:36 2015.
 #
 # This file is execfile()d with the current directory set to its
