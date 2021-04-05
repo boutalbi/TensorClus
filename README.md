@@ -9,7 +9,7 @@ TensorClus allows easy interaction with other python packages such as NumPy, Ten
 [![N|Solid](https://github.com/boutalbi/TensorClus/blob/master/BinaryTensorData.PNG?raw=true)](https://link.springer.com/article/10.1007/s41060-020-00205-5)
 
 - Source-code: https://github.com/boutalbi/TensorClus
-- Jupyter Notebooks: https://github.com/boutalbi/TensorClus/blob/main/demo_tensorClus.ipynb
+- Jupyter Notebooks: https://github.com/boutalbi/TensorClus/blob/master/demo_tensorClus.ipynb
 
 ### Brief description 
 TensorClus library provides multiple functionalities:
@@ -52,7 +52,7 @@ cd TensorClus
 # Install in editable mode with `-e` or, equivalently, `--editable`
 pip install -e .
 ```
-For more details about TensorClus, see [Documentation](https://github.com/boutalbi/TensorClus/blob/main/TensorClust_Documentation.pdf).
+For more details about TensorClus, see [Documentation](https://tensorclus.readthedocs.io/en/latest/).
 
 ### License
 TensorClus is released under the MIT License (refer to LISENSE file for details).

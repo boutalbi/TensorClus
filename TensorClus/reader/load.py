@@ -76,6 +76,7 @@ def save_txt_tensor(tensor, fileName):
     Parameters
     ----------
     tensor   : tensor array
+
     filePath : str
         the path of file
     """
