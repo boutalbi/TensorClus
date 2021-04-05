@@ -241,7 +241,7 @@ latex_elements = {
 #'figure_align': 'htbp',
 }
 
-
+autodoc_mock_imports = ['coclust', 'matplotlib', 'pandas','numpy','pandas','scikit-learn','scipy','tensorflow','tensorly']
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
