@@ -37,7 +37,11 @@ setup(name='TensorClus',
             'numpy',
             'scipy',
             'scikit-learn',
-            'matplotlib>=1.5'
+            'matplotlib>=1.5',
+            'coclust',
+            'tensorly',
+            'tensorflow'
+
         )
       },
       include_package_data=True,
