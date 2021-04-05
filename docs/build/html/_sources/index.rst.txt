@@ -3,15 +3,25 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Documentation for the Code
-**************************
+Welcome to TensorClus's documentation!
+========================================
+
 .. toctree::
    :maxdepth: 3
    :caption: Contents:
 
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
 TensorClus reader
 =====================
 .. automodule:: TensorClus.reader.load
+   :members:
+.. automodule:: TensorClus.reader.load.load_dataset
    :members:
 
 TensorClus decomposition
