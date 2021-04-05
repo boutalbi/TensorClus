@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#
+"""
 # TensorClus documentation build configuration file, created by
 # sphinx-quickstart on Sat Oct 31 21:32:36 2015.
 #
@@ -360,12 +360,8 @@ epub_exclude_files = ['search.html']
 # If false, no index is generated.
 #epub_use_index = True
 
-
-
-
-
-
 """
+
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -382,7 +378,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 sys.setrecursionlimit(1500)
-
+autodoc_mock_imports = ['coclust', 'matplotlib', 'pandas','numpy','pandas','scikit-learn','scipy','tensorflow','tensorly']
 # -- Project information -----------------------------------------------------
 
 project = 'TensorClus'
@@ -427,4 +423,3 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-"""
