@@ -18,7 +18,7 @@ TensorClus library provides multiple functionalities:
 - Tensor decomposition and clustering
 - Visualization
 
-### Requirments
+### Requirements
 ```python
 
 numpy==1.18.3
