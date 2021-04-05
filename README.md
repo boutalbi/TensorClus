@@ -97,7 +97,7 @@ print("Accuracy : ", acc)
 ```
 ### Datasets
 
-The following datasets and their [description](https://shorturl.at/rxyLQ) are available in Google Drive. 
+The following datasets and their [description](https://github.com/boutalbi/TensorClus/blob/master/data_description.md) are available in Google Drive. 
 
 - [DBLP1 dataset](https://shorturl.at/ayBG8)
 - [DBLP2 dataset](https://shorturl.at/fnt37)
