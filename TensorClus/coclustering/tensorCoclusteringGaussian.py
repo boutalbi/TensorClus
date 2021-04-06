@@ -20,7 +20,7 @@ import random
 
 from numpy.linalg import inv
 
-from sklearn.utils import check_random_state, check_array
+#from sklearn.utils import check_random_state
 
 from ..initialization import random_init
 from .baseNonDiagonalCoclustering import BaseNonDiagonalCoclust
@@ -120,7 +120,8 @@ class TensorCoclusteringGaussian(BaseNonDiagonalCoclust):
             self.gpu = GPU_exist
         else:
             GPU_exist = self.gpu
-        random_state = check_random_state(self.random_state)
+
+        #random_state = check_random_state(self.random_state)
 
         # check_array(X, accept_sparse=True, dtype="numeric", order=None,
         #             copy=False, force_all_finite=True, ensure_2d=True,
