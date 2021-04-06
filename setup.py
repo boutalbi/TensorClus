@@ -37,7 +37,7 @@ setup(name='TensorClus',
             'numpy',
             'scipy',
             'scikit-learn',
-            'matplotlib>=1.5',
+            'matplotlib',
             'coclust',
             'tensorly',
             'tensorflow'
