@@ -28,13 +28,13 @@ setup(name='TensorClus',
       license='BSD 3-Clause License',
       packages=['TensorClus'
                 ],
-      setup_requires=['pip>=19.0',"numpy==1.17.4",'pandas==0.23.4', 'scipy', 'scikit-learn==0.22.1','matplotlib', 'coclust'],
+      setup_requires=['pip>=19.0',"numpy==1.16.1",'pandas==0.23.4', 'scipy', 'scikit-learn==0.22.1','matplotlib', 'coclust'],
       install_requires=[
-          'pip>=19.0','numpy==1.17.4','pandas==0.23.4', 'scipy', 'scikit-learn==0.22.1','matplotlib', 'coclust'
+          'pip>=19.0','numpy==1.16.1','pandas==0.23.4', 'scipy', 'scikit-learn==0.22.1','matplotlib', 'coclust'
       ],
       extras_require={
         'alldeps': (
-            'numpy==1.17.4',
+            'numpy==1.16.1',
             'pandas==0.23.4',
             'scipy',
             'scikit-learn==0.22.1',
