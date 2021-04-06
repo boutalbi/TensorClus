@@ -21,7 +21,7 @@ from random import randint
 from scipy import special
 from numpy.linalg import inv
 
-from sklearn.utils import check_random_state, check_array
+from sklearn.utils import check_random_state
 
 from ..initialization import random_init
 from .baseDiagonalCoclustering import BaseDiagonalCoclust
