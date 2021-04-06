@@ -18,8 +18,6 @@ import coclust
 from coclust.coclustering import CoclustMod
 from coclust.coclustering import CoclustInfo
 from coclust.coclustering import CoclustSpecMod
-
-from sklearn.utils import check_random_state, check_array
 from ..initialization import random_init
 
 

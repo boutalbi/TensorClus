@@ -20,7 +20,6 @@ TensorClus library provides multiple functionalities:
 
 ### Requirements
 ```python
-
 numpy==1.18.3
 pandas==1.0.3
 scipy==1.4.1
@@ -105,6 +104,7 @@ The following datasets and their [description](https://github.com/boutalbi/Tenso
 - [Nus-Wide-8 dataset](https://shorturl.at/abK17)
 
 
+<!---
 ### Citing
 If you use TensorClus in an academic paper, please cite
 ```
@@ -119,6 +119,8 @@ If you use TensorClus in an academic paper, please cite
  url= "https://link.springer.com/article/10.1007/s41060-020-00205-5"
 }
 ```
+-->
+
 ### References
 [1] Boutalbi, R., Labiod, L., & Nadif, M. (2020). Tensor latent block model for co-clustering. International Journal of Data Science and Analytics, 1-15.
 

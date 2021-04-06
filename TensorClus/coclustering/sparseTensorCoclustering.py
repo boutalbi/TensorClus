@@ -14,20 +14,14 @@ of a Sparse tensor co-clustering algorithm.
 
 from __future__ import division
 import numpy as np
-from numpy import linalg
-import scipy as sp
 import random
-from random import randint
-from scipy import special
-from numpy.linalg import inv
-
-from sklearn.utils import check_random_state
+#from sklearn.utils import check_random_state
 
 from ..initialization import random_init
 from .baseDiagonalCoclustering import BaseDiagonalCoclust
 from ..tests.input_checking import check_tensor, check_numbers_clusters
 # Test GPU availability
-
+random.seed(10)
 GPU_exist = False
 try :
     import cupy as cp
@@ -115,7 +109,7 @@ class SparseTensorCoclusteringPoisson(BaseDiagonalCoclust):
         else:
             GPU_exist = self.gpu
 
-        random_state = check_random_state(self.random_state)
+        #random_state = check_random_state(self.random_state)
 
         # check_array(X, accept_sparse=True, dtype="numeric", order=None,
         #             copy=False, force_all_finite=True, ensure_2d=False,
@@ -135,7 +129,8 @@ class SparseTensorCoclusteringPoisson(BaseDiagonalCoclust):
         column_labels_ = self.column_labels_
         gamma_kl = self.gamma_kl
         gamma_kl_evolution = self.gamma_kl_evolution
-        seeds = random_state.randint(np.iinfo(np.int32).max, size=self.n_init)
+        #seeds = random_state.randint(np.iinfo(np.int32).max, size=self.n_init)
+        seeds = random.sample(range(10, 30), self.n_init)
         for seed in seeds:
             self._fit_single(X, seed, y)
             if np.isnan(self.criterion):

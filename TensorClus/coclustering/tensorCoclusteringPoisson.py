@@ -14,12 +14,8 @@ of a tensor co-clustering algorithm for count three-way tensor.
 
 from __future__ import division
 import numpy as np
-from numpy import linalg
-import scipy as sp
+
 import random
-from random import randint
-from scipy import special
-from numpy.linalg import inv
 
 from sklearn.utils import check_random_state, check_array
 
@@ -27,6 +23,7 @@ from ..initialization import random_init
 from .baseNonDiagonalCoclustering import BaseNonDiagonalCoclust
 from ..tests.input_checking import check_tensor,check_numbers_clusters_non_diago
 
+random.seed(10)
 GPU_exist = False
 try :
     import cupy as cp
@@ -132,7 +129,8 @@ class TensorCoclusteringPoisson(BaseNonDiagonalCoclust):
         column_labels_ = self.column_labels_
         gamma_kl = self.gamma_kl
         gamma_kl_evolution = self.gamma_kl_evolution
-        seeds = random_state.randint(np.iinfo(np.int32).max, size=self.n_init)
+        #seeds = random_state.randint(np.iinfo(np.int32).max, size=self.n_init)
+        seeds = random.sample(range(10, 30), self.n_init)
         for seed in seeds:
             self._fit_single(X, seed, y)
             if np.isnan(self.criterion):

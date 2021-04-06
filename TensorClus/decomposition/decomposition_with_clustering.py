@@ -13,21 +13,14 @@ class with common methods for multiple clustering alorihtm from decomposition re
 # License: BSD 3 clause
 from __future__ import division
 import numpy as np
-import scipy as sp
-import random
-from random import randint
-from scipy import special
-
-
-from sklearn.utils import check_random_state, check_array
 from sklearn.cluster import KMeans
 from coclust.clustering.spherical_kmeans import SphericalKmeans
 from sklearn.cluster import SpectralClustering
 from sklearn import mixture
 
-from ..initialization import random_init
+
 from sklearn.base import BaseEstimator
-from TensorClus.tests.input_checking import check_positive
+
 
 
 class DecompositionWithClustering(BaseEstimator):
