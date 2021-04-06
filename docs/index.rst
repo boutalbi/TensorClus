@@ -7,7 +7,7 @@ Welcome to TensorClus's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
    :caption: Contents:
 
 
@@ -24,7 +24,7 @@ TensorClus decomposition
 
 TensorClus coclustering
 ===================
-.. automodule:: TensorClus.coclustering.sparseTensorCoclustering
+.. automodule:: TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson
    :members:
 .. automodule:: TensorClus.coclustering.tensorCoclusteringPoisson
    :members:
