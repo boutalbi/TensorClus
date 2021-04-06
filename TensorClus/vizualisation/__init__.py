@@ -19,7 +19,10 @@ plt.style.use('ggplot')
 def generateColour():
     """
     Generate random color.
-    
+
+    Parameters
+    ----------
+
     Returns
     -------
     str
@@ -51,14 +54,23 @@ def Plot_CoClust_axes_etiquette(title, fig, axes, data, phiR, phiC, K, L, etique
     Parameters
     ----------
     title: title of figure
+
     fig  : figure that includes all axes
+
     axes : list of axes corresponding to the number of slices
+
     data : tensor data
+
     phiR : row clustering partition
+
     phiC : row clustering partition
+
     K    : number of row cluster
+
     L    : number of columns cluster
+
     etiquette : name of slices
+
     """
     n = data.shape[0]
     d = data.shape[1]
@@ -122,9 +134,13 @@ def plot_logLikelihood_evolution(model, do_plot=True, save=False, dpi = 200):
     Parameters
     ----------
     model: :class:`TensorClus.coclustering`, Fitted model
+
     do_plot: boolean, Whether the plot should be displayed. True by default. Disabling this allows users to handle displaying the plot themselves.
+
     save   : boolean, False by default. Allowing save plot as image
+
     dpi    : int, 200 by  default. Allowing to choose a specific resolution when saving image
+
     """
 
     # Prepare a subplot and set the axis tick values and labels
@@ -166,8 +182,11 @@ def plot_parameter_evolution(model, do_plot=True, save=False, dpi = 200):
     Parameters
     ----------
     model: :class:`TensorClus.coclustering`, Fitted model
+
     do_plot: boolean, Whether the plot should be displayed. True by default. Disabling this allows users to handle displaying the plot themselves.
+
     save   : boolean, False by default. Allowing save plot as image
+
     dpi    : int, 200 by  default. Allowing to choose a specific resolution when saving image
     """
 
@@ -236,10 +255,15 @@ def plot_slice_reorganisation(data,model, slicesName = None,  do_plot=True, save
     Parameters
     ----------
     data   : tensor data
+
     model: :class:`TensorClus.coclustering.CoclustMod`, Fitted model
+
     slicesName : list of slice names
+
     do_plot: boolean, Whether the plot should be displayed. True by default. Disabling this allows users to handle displaying the plot themselves.
+
     save   : boolean, False by default. Allowing save plot as image
+
     dpi    : int, 200 by  default. Allowing to choose a specific resolution when saving image
     """
 
