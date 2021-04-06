@@ -28,7 +28,7 @@ setup(name='TensorClus',
       license='BSD 3-Clause License',
       packages=['TensorClus'
                 ],
-      setup_requires=['pip>=19.0',"nnumpy==1.16.5",'pandas==1.2.3', 'scipy', 'scikit-learn==0.22.1','matplotlib', 'coclust'],
+      setup_requires=['pip>=19.0',"numpy==1.16.5",'pandas==1.2.3', 'scipy', 'scikit-learn==0.22.1','matplotlib', 'coclust'],
       install_requires=[
           'pip>=19.0','numpy==1.16.5','pandas==1.2.3', 'scipy', 'scikit-learn==0.22.1','matplotlib', 'coclust'
       ],
