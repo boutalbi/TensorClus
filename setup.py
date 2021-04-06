@@ -28,13 +28,13 @@ setup(name='TensorClus',
       license='GNU',
       packages=['TensorClus'
                 ],
-      setup_requires=["numpy", 'scipy', 'scikit-learn','matplotlib', 'coclust','tensorly','tensorflow'],
+      setup_requires=["numpy==1.19.2", 'scipy', 'scikit-learn','matplotlib', 'coclust','tensorly','tensorflow'],
       install_requires=[
-          'numpy', 'scipy', 'scikit-learn','matplotlib', 'coclust','tensorly','tensorflow'
+          'numpy==1.19.2', 'scipy', 'scikit-learn','matplotlib', 'coclust','tensorly','tensorflow'
       ],
       extras_require={
         'alldeps': (
-            'numpy',
+            'numpy==1.19.2',
             'scipy',
             'scikit-learn',
             'matplotlib',
