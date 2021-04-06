@@ -35,7 +35,7 @@ TensorClus coclustering
 
 TensorClus vizualisation
 ===================
-.. automodule:: TensorClus.vizualisation
+.. automodule:: TensorClus.vizualisation.__init__
    :members:
 
 TensorClus tests

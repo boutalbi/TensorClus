@@ -7,11 +7,8 @@ different measures or data.
 """
 
 import logging
-
 import matplotlib.pyplot as plt
-import matplotlib.patheffects as PathEffects
 import numpy as np
-from sklearn.preprocessing import normalize
 from random import randint
 import matplotlib
 
