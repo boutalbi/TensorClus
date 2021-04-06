@@ -11,3 +11,4 @@ scipy==1.4.1
 tensorflow==2.3.0
 tensorflow-estimator==2.3.0
 tensorly==0.4.5
+numpydoc==1.1.0
