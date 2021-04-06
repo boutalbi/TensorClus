@@ -24,6 +24,7 @@ def load_dataset(datasetName):
     ----------
     datasetName : str
         the name of dataset
+
     Returns
     -------
     tensor
@@ -50,6 +51,7 @@ def read_txt_tensor(filePath):
     ----------
     filePath : str
         the path of file
+
     Returns
     -------
     tensor
@@ -75,7 +77,7 @@ def save_txt_tensor(tensor, fileName):
     
     Parameters
     ----------
-    tensor   : tensor array
+    tensor : tensor array
 
     filePath : str
         the path of file
