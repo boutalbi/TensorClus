@@ -406,7 +406,6 @@ release = '0.0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [ 'sphinx.ext.autodoc','sphinx.ext.mathjax','sphinx.ext.viewcode',
-    'numpydoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',]##'sphinx.ext.todo', 'sphinx.ext.viewcode','sphinx.ext.napoleon','sphinx.ext.intersphinx'
 napoleon_use_param = False
