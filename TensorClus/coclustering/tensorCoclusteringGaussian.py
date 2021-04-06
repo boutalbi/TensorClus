@@ -25,7 +25,7 @@ from sklearn.utils import check_random_state, check_array
 
 from ..initialization import random_init
 from .baseNonDiagonalCoclustering import BaseNonDiagonalCoclust
-from TensorClus.tests.input_checking import check_tensor, check_numbers_clusters_non_diago
+from ..tests.input_checking import check_tensor, check_numbers_clusters_non_diago
 
 GPU_exist = False
 try :
@@ -463,7 +463,7 @@ class TensorCoclusteringGaussian(BaseNonDiagonalCoclust):
         L = self.n_col_clusters
         bool_fuzzy = self.fuzzy
         if self.init_row is None:
-            z = random_init(K, X.shape[0], random_state)
+            z = random_init(K, data.shape[0], random_state)
 
         else:
             z = np.array(self.init_row, dtype=float)
@@ -471,7 +471,7 @@ class TensorCoclusteringGaussian(BaseNonDiagonalCoclust):
 
         if self.init_col is None:
 
-            w = random_init(L, X.shape[1], random_state)
+            w = random_init(L, data.shape[1], random_state)
         else:
 
             w = np.array(self.init_col, dtype=float)

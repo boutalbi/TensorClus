@@ -25,7 +25,7 @@ from sklearn.utils import check_random_state, check_array
 
 from ..initialization import random_init
 from .baseNonDiagonalCoclustering import BaseNonDiagonalCoclust
-from TensorClus.tests.input_checking import check_tensor,check_numbers_clusters_non_diago
+from ..tests.input_checking import check_tensor,check_numbers_clusters_non_diago
 
 GPU_exist = False
 try :
@@ -142,7 +142,7 @@ class TensorCoclusteringBernoulli(BaseNonDiagonalCoclust):
                 criterions = self.criterions
                 row_labels_ = self.row_labels_
                 column_labels_ = self.column_labels_
-                mu_kl = self.mu_kl
+                mu_kl_ = self.mu_kl
                 mu_kl_evolution = self.mu_kl_evolution
 
         # update attributes
@@ -386,7 +386,7 @@ class TensorCoclusteringBernoulli(BaseNonDiagonalCoclust):
         L = self.n_col_clusters
         bool_fuzzy = self.fuzzy
         if self.init_row is None:
-            z = random_init(K, X.shape[0], random_state)
+            z = random_init(K, data.shape[0], random_state)
 
         else:
             z = np.array(self.init_row, dtype=float)
@@ -394,7 +394,7 @@ class TensorCoclusteringBernoulli(BaseNonDiagonalCoclust):
 
         if self.init_col is None:
 
-            w = random_init(L, X.shape[1], random_state)
+            w = random_init(L, data.shape[1], random_state)
         else:
 
             w = np.array(self.init_col, dtype=float)
