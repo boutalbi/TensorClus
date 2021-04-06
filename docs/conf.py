@@ -391,7 +391,7 @@ sys.path.insert(1, os.path.dirname(os.path.abspath("../")) + os.sep + "TensorClu
 sys.setrecursionlimit(1500)
 autodoc_mock_imports = ['pip>=19.0','numpydoc==1.1.0',
                         'sphinx==3.4.3','sphinx_rtd_theme==0.5.1','readthedocs-sphinx-search==0.1.0','coclust==0.2.1','matplotlib==3.0.3',
-                        'numpy==1.18.3','pandas==0.23.4','scipy==1.4.1','scikit-learn==0.22.1','tensorflow==2.3.0','tensorflow-estimator==2.3.0',
+                        'numpy==1.17.4','pandas==0.23.4','scipy==1.4.1','scikit-learn==0.22.1','tensorflow==2.3.0','tensorflow-estimator==2.3.0',
                         'tensorly==0.4.5']
 # -- Project information -----------------------------------------------------
 
