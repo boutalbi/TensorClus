@@ -24,7 +24,7 @@ TensorClus decomposition
 
 TensorClus coclustering
 ===================
-.. automodule:: TensorClus.coclustering.sparseTensorCoclustering.SparseTensorCoclusteringPoisson
+.. automodule:: TensorClus.coclustering.sparseTensorCoclustering
    :members:
 .. automodule:: TensorClus.coclustering.tensorCoclusteringPoisson
    :members:
