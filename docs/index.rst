@@ -1,44 +1,28 @@
-.. TensorClus documentation master file, created by
-   sphinx-quickstart on Tue Sep  1 12:12:39 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to TensorClus's documentation!
 ========================================
 
+.. image:: https://readthedocs.org/projects/tensorclus/badge/?version=latest
+   :target: https://tensorclus.readthedocs.io/en/latest/?badge=latest
+
+.. image:: https://badge.fury.io/py/TensorClus.svg
+    :target: https://badge.fury.io/py/TensorClus
+
+**TensorClus**  (Tensor Clustering) is a first Python library aiming to clustering and co-clustering of tensor data. It allows to easily perform tensor clustering trought decomposition or tensor learning and tensor algebra. TensorClus allows easy interaction with other python packages such as NumPy, Tensorly, TensorFlow or TensorD, and run methods at scale on CPU or GPU.
+
+It supports major operating systems namely Microsoft Windows, macOS, and Ubuntu.
+
+**TensorClus** is distributed under the 3-Clause BSD license. It works with  Python>= 3.5.
+
+.. note::  If you use this software as part of your research, please cite: `Rafika Boutalbi, Lazhar Labiod, Mohamed Nadif. TensorCLus: A Python Library for Tensor Co-clustering. Neurocomputing`_
+
+
+
+
 .. toctree::
-   :maxdepth: 4
-   :caption: Contents:
+   :maxdepth: 1
 
+   install
+   examples
+   api/index
 
-
-TensorClus reader
-=====================
-.. automodule:: TensorClus.reader.load
-   :members:
-
-TensorClus decomposition
-=================
-.. automodule:: TensorClus.decomposition.decomposition_with_clustering
-   :members:
-
-TensorClus coclustering
-===================
-.. automodule:: TensorClus.coclustering.sparseTensorCoclustering
-   :members:
-.. automodule:: TensorClus.coclustering.tensorCoclusteringPoisson
-   :members:
-.. automodule:: TensorClus.coclustering.tensorCoclusteringGaussian
-   :members:
-.. automodule:: TensorClus.coclustering.tensorCoclusteringBernoulli
-   :members:
-
-TensorClus vizualisation
-===================
-.. automodule:: TensorClus.vizualisation.__init__
-   :members:
-
-TensorClus tests
-===================
-.. automodule:: TensorClus.tests.input_checking
-   :members:
+.. image:: img/tensorClusLogo.png
