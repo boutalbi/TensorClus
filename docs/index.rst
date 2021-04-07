@@ -26,3 +26,6 @@ It supports major operating systems namely Microsoft Windows, MacOS, and Ubuntu.
    api/index
 
 .. image:: img/tensorClusLogo.png
+   :height: 315px
+   :width: 361 px
+   :scale: 50 %
