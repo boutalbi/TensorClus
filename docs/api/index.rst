@@ -28,8 +28,3 @@ TensorClus vizualisation
 ===================
 .. automodule:: TensorClus.vizualisation.__init__
    :members:
-
-TensorClus tests
-===================
-.. automodule:: TensorClus.tests.input_checking
-   :members:

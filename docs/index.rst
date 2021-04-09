@@ -13,7 +13,7 @@ It supports major operating systems namely Microsoft Windows, MacOS, and Ubuntu.
 
 **TensorClus** is distributed under the 3-Clause BSD license. It works with  Python>= 3.6.
 
-.. note::  If you use this software as part of your research, please cite: `Rafika Boutalbi, Lazhar Labiod, Mohamed Nadif. TensorCLus: A Python Library for Tensor Co-clustering.`
+.. note::  If you use this software as part of your research, please cite: `Rafika Boutalbi, Lazhar Labiod, Mohamed Nadif. TensorClus: A Python Library for Tensor Co-clustering.`
 
 
 

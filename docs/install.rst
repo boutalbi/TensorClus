@@ -16,6 +16,23 @@ It will install the following libraries:
     - tensorly
     - tensorflow
 
+Install from GitHub repository
+''''''''''''''''''''''''''''''
+
+To clone TensorClus project from github::
+
+  # Install git LFS via https://www.atlassian.com/git/tutorials/git-lfs
+  # initialize Git LFS
+  git lfs install Git LFS initialized.
+  git init Initialized
+  # clone the repository
+  git clone https://github.com/boutalbi/TensorClus.git
+  cd TensorClus
+  # Install in editable mode with `-e` or, equivalently, `--editable`
+  pip install -e .
+
+.. note::  The latest TensorClus development sources are available on https://github.com/boutalbi/TensorClus
+
 
 Running the tests
 '''''''''''''''''
