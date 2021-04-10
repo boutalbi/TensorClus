@@ -30,6 +30,8 @@ It supports major operating systems namely Microsoft Windows, MacOS, and Ubuntu.
    :width: 320 px
    :scale: 50 %
 
+|br|
+
 .. image:: img/parisLogo.png
    :height: 315px
    :width: 620 px
