@@ -1,4 +1,4 @@
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 
 
 def readme():
@@ -8,7 +8,7 @@ def readme():
 
 
 setup(name='TensorClus',
-      version='0.0.1',
+      version='0.0.2',
       description='TensorClus is a Python package for clustering of three-way tensor data',
       long_description=readme(),
       long_description_content_type='text/markdown',
@@ -26,8 +26,7 @@ setup(name='TensorClus',
       keywords='Tensor Clustering framework',
       platforms=['*nix'],
       license='BSD 3-Clause License',
-      packages=['TensorClus'
-                ],
+      packages=find_packages(),
       setup_requires=['pip>=19.0',"numpy==1.17.4",'pandas==1.0.3', 'scipy==1.2.1', 'scikit-learn==0.22.1','matplotlib==3.1.3', 'coclust'],
       install_requires=[
           'pip>=19.0','numpy==1.17.4','pandas==1.0.3', 'scipy==1.2.1', 'scikit-learn==0.22.1','matplotlib==3.1.3', 'coclust'

@@ -3,7 +3,7 @@
 """
 
 The :mod:`TensorClus.reader` module provides functions to load and read
-different data fprmat.
+different data format.
 """
 
 import pandas as pd
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 def load_dataset(datasetName):
-    """ Load one of availble dataset.
+    """ Load one of the available dataset.
     
     Parameters
     ----------
@@ -30,7 +30,7 @@ def load_dataset(datasetName):
     tensor
         three-way numpy array
     labels
-        true row classes
+        true row classes (ground-truth)
     slices
         slices name
     """
@@ -72,7 +72,7 @@ def read_txt_tensor(filePath):
 
     return tensorData
 
-def save_txt_tensor(tensor, fileName):
+def save_txt_tensor(tensor, filePath):
     """ save tensor data as a text file.
     
     Parameters
@@ -94,4 +94,4 @@ def save_txt_tensor(tensor, fileName):
     data[:, 2]      = vIndices
     data[:, 3]      = values
 
-    np.savetxt(fileName, data, delimiter=',')
+    np.savetxt(filePath, data, delimiter=',')
