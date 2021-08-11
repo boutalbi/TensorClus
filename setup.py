@@ -33,7 +33,7 @@ setup(name='TensorClus',
       ],
       extras_require={
         'alldeps': (
-            'numpy==1.15.2',
+            'numpy==1.16.1',
             'pandas==1.0.3',
             'scipy==1.2.1',
             'scikit-learn==0.22.1',

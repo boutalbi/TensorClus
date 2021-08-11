@@ -7,9 +7,11 @@ Welcome to TensorClus's documentation!
 .. image:: https://badge.fury.io/py/TensorClus.svg
     :target: https://badge.fury.io/py/TensorClus
 
-**TensorClus**  (Tensor Clustering) is a first Python library aiming to clustering and co-clustering of tensor data. It allows to easily perform tensor clustering throught decomposition or tensor learning and tensor algebra. TensorClus allows easy interaction with other python packages such as NumPy, Tensorly, TensorFlow or TensorD, and run methods at scale on CPU or GPU.
+**TensorClus**  (Tensor Clustering) is the first Python library aiming to cluster and co-clustering tensor data.
+It allows to easily perform tensor clustering through decomposition or tensor learning and tensor algebra.
+TensorClus allows easy interaction with other python packages such as NumPy, Tensorly, TensorFlow, or TensorD, and run methods at scale on CPU or GPU.
 
-It supports major operating systems namely Microsoft Windows, MacOS, and Ubuntu.
+**It supports major operating systems namely Microsoft Windows, MacOS, and Ubuntu**.
 
 **TensorClus** is distributed under the 3-Clause BSD license. It works with  Python>= 3.6.
 
