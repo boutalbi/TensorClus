@@ -39,5 +39,5 @@ TensorClus allows easy interaction with other python packages such as NumPy, Ten
 
 .. image:: img/Logo_Centre_Borelli.png
    :height: 300px
-   :width: 620 px
+   :width: 480 px
    :scale: 30 %
